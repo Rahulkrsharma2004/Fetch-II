@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FETCH TODOS</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 3px solid rgb(0, 0, 0);
+            border-collapse: collapse;
+            padding: 10px;
+        }
+
+        body {
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .tr {
+            background-color: rgb(5, 25, 245);
+            color: rgb(255, 111, 0);
+        }
+
+        tbody {
+            background-color: rgb(228, 164, 246);
+            font-size: large;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="root">
+        <thead>
+            <tr class="tr">
+                <td>
+                    <h3>ID</h3>
+                </td>
+                <td>
+                    <h3 style="text-align: center;">TITLE</h3>
+                </td>
+                <td>
+                    <h3>STATUS</h3>
+                </td>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+
+        </tbody>
+    </table>
+
+</body>
+<script>
+
+    let root = document.querySelector("#root tbody")
+
+    async function init() {
+        try {
+            let res = await fetch(`https://jsonplaceholder.typicode.com/todos`)
+            let data = await res.json()
+            displayData(data)
+            // console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    function displayData(tasks) {
+        tasks.forEach(({ id, title, completed }) => {
+            let taskCard = document.createElement("tr")
+
+            let IDElement = document.createElement("td")
+            IDElement.textContent = `${id}`
+
+            let TitleElement = document.createElement("td")
+            TitleElement.textContent = `${title}`
+
+            let StatusElement = document.createElement("td")
+            StatusElement.textContent = `${completed}`
+
+            taskCard.append(IDElement)
+            taskCard.append(TitleElement)
+            taskCard.append(StatusElement)
+            root.append(taskCard)
+
+
+
+        });
+        
+    }
+
+    init()
+</script>
+
+</html>
